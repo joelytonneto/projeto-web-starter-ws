@@ -1,14 +1,14 @@
+require('dotenv').config();
 const { Pool } = require("pg");
 
-const chaveSecretaJWT =
-  "3718d26195ae34d69a565d4aad975cf76271c61d6670eef5699949bb4f571126";
+const chaveSecretaJWT = process.env.JWT_SECRET_KEY;
 
 const bdPostgres = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "crud_node",
-  password: "postgres",
-  port: 5432,
+  user: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 module.exports = { chaveSecretaJWT, bdPostgres };
