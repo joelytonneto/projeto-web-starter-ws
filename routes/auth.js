@@ -6,8 +6,8 @@ function verifyToken(req, res, next) {
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
-    req.token = bearerToken;
-    jwt.verify(req.token, chaveSecretaJWT, (err, data) => {
+    req.accessToken = bearerToken;
+    jwt.verify(req.accessToken, chaveSecretaJWT, (err, data) => {
       if (err) {
         return res.status(401).send("Token is invalid");
       }

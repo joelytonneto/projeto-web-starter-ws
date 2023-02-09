@@ -10,12 +10,12 @@ const { verifyToken } = require("../../../routes/auth");
 // Cria um usuário
 routerUsuario.post("/users", verifyToken, async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, user, avatar, status, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const { rows } = await bdPostgres.query(
-      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
-      [email, hashedPassword]
+      `INSERT INTO users ("name", "user", avatar, status, email, "password") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [name, user, avatar, status, email, hashedPassword]
     );
     res.send(rows[0]);
   } catch (err) {
@@ -41,9 +41,19 @@ routerUsuario.post("/login", async (req, res) => {
       return res.status(401).send("Email or password is incorrect");
     }
     const accessToken = jwt.sign({ id: user.id }, chaveSecretaJWT, {
-      expiresIn: 10, // 24 hours
+      expiresIn: 3600, // 24 hours
     });
-    res.send({ accessToken });
+    let tokenType = "bearer";
+
+    let usuarioRetorno = {
+      avatar: user.avatar,
+      email: user.email,
+      id: user.id,
+      name: user.name,
+      status: user.status,
+    };
+
+    res.send({ user: usuarioRetorno, accessToken, tokenType });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error logging in");
@@ -83,12 +93,12 @@ routerUsuario.get("/users/:id", verifyToken, async (req, res) => {
 routerUsuario.patch("/users/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
-    const { email, password } = req.body;
+    const { name, user, avatar, status, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const { rows } = await bdPostgres.query(
-      "UPDATE users SET email = $1, password = $2 WHERE id = $3 RETURNING *",
-      [email, hashedPassword, id]
+      `UPDATE users SET "name" = $1, "user" = $2, avatar = $3, status = $4, email = $5, password = $6 WHERE id = $7 RETURNING *`,
+      [name, user, avatar, status, email, hashedPassword, id]
     );
     if (rows.length === 0) {
       return res.status(404).send("User not found");
