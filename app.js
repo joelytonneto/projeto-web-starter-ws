@@ -16,5 +16,5 @@ app.use(bodyParser.json());
 app.use("/usuario", routerUsuario);
 
 app.listen(3000, () => {
-  console.log("API started on port 3000 ");
+  console.log("API started on port 3000");
 });
