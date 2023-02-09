@@ -1,0 +1,13 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  "name" TEXT NULL,
+  "user" TEXT NULL,
+  avatar TEXT NULL,
+  status TEXT NULL, 
+  email TEXT NOT NULL,
+  "password" TEXT NOT NULL
+);
+
+INSERT INTO public.users
+("name", "user", avatar, status, email, "password")
+VALUES('Joelyton', 'joelytonneto', 'assets/images/avatars/brian-hughes.jpg', 'online', 'joelytonneto@gmail.com', '$2a$10$Mjr1RdHgHaL2kCXhgPQCreM4wNCnfg/m8W1vjcVFOlVs.nNjsgzY.');
