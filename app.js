@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const routerUsuario = require("./routes/api/usuario/api");
+const routerPesquisa = require("./routes/api/pesquisa/api");
 
 app.use(
   cors({
@@ -14,6 +15,7 @@ app.use(
 
 app.use(bodyParser.json());
 app.use("/usuario", routerUsuario);
+app.use("/pesquisas", routerPesquisa);
 
 app.listen(3000, () => {
   console.log("API started on port 3000");
