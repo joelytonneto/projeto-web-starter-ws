@@ -17,8 +17,6 @@ routerPesquisa.post('/pesquisa', (req, res) => {
 
     collection.insertOne(pesquisa)
     .then((result) => {
-      console.log(result);
-      console.log('Survey saved successfully');
       res.send(result);
       client.close();
     }).
