@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const routerUsuario = require("./routes/api/usuario/api");
 const routerPesquisa = require("./routes/api/pesquisa/api");
-const routerMenu = require("./routes/api/pesquisa/api");
+const routerMenu = require("./routes/api/menu/api");
 const index = require('./models/index');
 
 app.use(

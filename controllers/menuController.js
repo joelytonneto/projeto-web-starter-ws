@@ -1,12 +1,12 @@
 const { menu } = require('../models/menu');
 
-exports.getAllmenus = (req, res, next) => {
+exports.getAllMenus = (req, res, next) => {
   menu.findAll()
     .then((menus) => res.json(menus))
     .catch((err) => next(err));
 };
 
-exports.getmenuById = (req, res, next) => {
+exports.getMenuById = (req, res, next) => {
   const id = req.params.id;
   menu.findByPk(id)
     .then((menu) => {
@@ -20,7 +20,7 @@ exports.getmenuById = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.createmenu = (req, res, next) => {
+exports.createMenu = (req, res, next) => {
   const { name, description, price, isAvailable } = req.body;
   menu.create({
     name,
@@ -32,7 +32,7 @@ exports.createmenu = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.updatemenu = (req, res, next) => {
+exports.updateMenu = (req, res, next) => {
   const id = req.params.id;
   const { name, description, price, isAvailable } = req.body;
   menu.update({ name, description, price, isAvailable }, { where: { id } })
@@ -40,7 +40,7 @@ exports.updatemenu = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.deletemenu = (req, res, next) => {
+exports.deleteMenu = (req, res, next) => {
   const id = req.params.id;
   menu.destroy({ where: { id } })
     .then(() => res.status(204).json({ message: 'menu deleted successfully' }))
