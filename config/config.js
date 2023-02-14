@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Pool } = require("pg");
+const Sequelize = require('sequelize');
 
 const chaveSecretaJWT = process.env.JWT_SECRET_KEY;
 
@@ -11,4 +12,10 @@ const bdPostgres = new Pool({
   port: process.env.DB_PORT,
 });
 
-module.exports = { chaveSecretaJWT, bdPostgres };
+const conexaoSequelize = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD, { host: process.env.DB_HOST, dialect: 'postgres' }
+);
+
+module.exports = { chaveSecretaJWT, bdPostgres, conexaoSequelize };

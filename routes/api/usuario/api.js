@@ -40,7 +40,68 @@ routerUsuario.post("/login", async (req, res) => {
     if (!passwordIsValid) {
       return res.status(401).send("Email or password is incorrect");
     }
-    const accessToken = jwt.sign({ id: user.id }, chaveSecretaJWT, {
+
+    let menus = { compact: {}, default: {}, futuristic: {},  horizontal: {} }
+    
+    menus.compact = 
+    [        
+      {
+        "id": "example2",
+        "title": "Testando Example",
+        "type": "basic",
+        "icon": "heroicons_outline:chart-pie",
+        "link": "/testando-example"
+      }
+    ];
+
+    menus.default = 
+    [
+      {
+        "id": "example1",
+        "title": "Example 1",
+        "type": "basic",
+        "icon": "heroicons_outline:chart-pie",
+        "link": "/testando-example"
+      },
+      {
+        "id": "example2",
+        "title": "Example 2",
+        "type": "basic",
+        "icon": "heroicons_outline:chart-pie",
+        "link": "/testando-example"
+      },
+      {
+        "id": "example3",
+        "title": "Example 3",
+        "type": "basic",
+        "icon": "heroicons_outline:chart-pie",
+        "link": "/testando-example"
+      }
+    ];
+
+    menus.futuristic =
+    [        
+      {
+        "id": "example2",
+        "title": "Testando Example",
+        "type": "basic",
+        "icon": "heroicons_outline:chart-pie",
+        "link": "/testando-example"
+      }
+    ];
+
+    menus.horizontal =
+    [        
+      {
+        "id": "example2",
+        "title": "Testando Example",
+        "type": "basic",
+        "icon": "heroicons_outline:chart-pie",
+        "link": "/testando-example"
+      }
+    ];
+    
+    const accessToken = jwt.sign({ id: user.id, menus: menus }, chaveSecretaJWT, {
       expiresIn: 3600, // 24 hours
     });
     let tokenType = "bearer";
