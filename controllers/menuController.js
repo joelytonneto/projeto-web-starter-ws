@@ -21,12 +21,17 @@ exports.getMenuById = (req, res, next) => {
 };
 
 exports.createMenu = (req, res, next) => {
-  const { name, description, price, isAvailable } = req.body;
+  const { id, title, type, icon, link, id_sistema, has_sub_menu, parent_id, ordem } = req.body;
   menu.create({
-    name,
-    description,
-    price,
-    isAvailable
+    id,
+    title,
+    type,
+    icon,
+    link,
+    id_sistema,
+    has_sub_menu,
+    parent_id,
+    ordem
   })
     .then((menu) => res.status(201).json(menu))
     .catch((err) => next(err));
