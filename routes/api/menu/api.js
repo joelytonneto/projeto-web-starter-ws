@@ -1,12 +1,13 @@
 const express = require('express');
 const routerMenu = express();
+const { verifyToken } = require("../../../routes/auth");
 
 const menuController = require('../../../controllers/menuController');
 
-routerMenu.get("/menus", menuController.getAllMenus);
-routerMenu.get('/menus/:id', menuController.getMenuById);
-routerMenu.post('/menus', menuController.createMenu);
-routerMenu.put('/menus/:id', menuController.updateMenu);
-routerMenu.delete('/menus/:id', menuController.deleteMenu);
+routerMenu.get("/menus", verifyToken, menuController.getAllMenus);
+routerMenu.get('/menus/:id', verifyToken, menuController.getMenuById);
+routerMenu.post('/menus', verifyToken, menuController.createMenu);
+routerMenu.put('/menus/:id', verifyToken, menuController.updateMenu);
+routerMenu.delete('/menus/:id', verifyToken, menuController.deleteMenu);
 
 module.exports = routerMenu;
