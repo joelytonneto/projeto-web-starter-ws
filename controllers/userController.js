@@ -49,12 +49,12 @@ exports.authUser = async (req, res, next) => {
       menus: menus
     };
 
-    const accessToken = jwt.sign({ id: user.id, menus: menus, usuarioRetorno }, chaveSecretaJWT, {
+    const accessToken = jwt.sign({ usuarioRetorno }, chaveSecretaJWT, {
       expiresIn: 3600, // 24 hours
     });
     let tokenType = "bearer";
 
-    res.send({ user: usuarioRetorno, accessToken, tokenType });
+    res.send({ accessToken, tokenType });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error logging in");
