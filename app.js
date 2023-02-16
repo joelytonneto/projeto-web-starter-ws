@@ -1,13 +1,16 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { conectarBancoDeDados } = require("./config/config")
 const bodyParser = require("body-parser");
-const routerUsuario = require("./routes/api/usuario/api");
+const routerUser = require("./routes/api/usuario/api");
 const routerPesquisa = require("./routes/api/pesquisa/api");
 const routerMenu = require("./routes/api/menu/api");
 const routerPerfilUsuario = require("./routes/api/perfil-usuario/api");
 const routerPerfilUsuarioMenu = require("./routes/api/perfil-usuario-menu/api");
 const index = require('./models/index');
+
+conectarBancoDeDados();
 
 app.use(
   cors({
@@ -18,7 +21,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
-app.use("/usuario", routerUsuario);
+app.use("/usuario", routerUser);
 app.use("/pesquisas", routerPesquisa);
 app.use("/menu", routerMenu);
 app.use("/perfil-usuario", routerPerfilUsuario);

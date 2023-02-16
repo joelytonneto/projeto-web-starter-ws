@@ -1,3 +1,9 @@
+INSERT INTO "perfil-usuarios"
+(id_sistema, descricao, ativo, "createdAt", "updatedAt")
+VALUES(1, 'ADMIN', true, '2023-02-15 22:47:55.445 -0300', '2023-02-15 22:47:55.445 -0300');
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   "name" TEXT NULL,
@@ -5,9 +11,11 @@ CREATE TABLE users (
   avatar TEXT NULL,
   status TEXT NULL, 
   email TEXT NOT NULL,
-  "password" TEXT NOT NULL
+  "password" TEXT NOT NULL,
+  id_perfil_acesso INT NOT NULL,
+  FOREIGN KEY (id_perfil_acesso) REFERENCES "perfil-usuarios" (id)
 );
 
 INSERT INTO public.users
-("name", "user", avatar, status, email, "password")
-VALUES('Joelyton', 'joelytonneto', 'assets/images/avatars/brian-hughes.jpg', 'online', 'joelytonneto@gmail.com', '$2a$10$Mjr1RdHgHaL2kCXhgPQCreM4wNCnfg/m8W1vjcVFOlVs.nNjsgzY.');
+("name", "user", avatar, status, email, "password", id_perfil_acesso, "createdAt", "updatedAt")
+VALUES('Joelyton', 'joelytonneto', 'assets/images/avatars/brian-hughes.jpg', 'online', 'joelytonneto@gmail.com', '$2a$10$xyU9DlP5nH.W.Ozt0mG4wunp8oH2J4uwSIwgGYp.en.hlqLoh9RLO', 1, '2023-02-15 22:47:55.445 -0300', '2023-02-15 22:47:55.445 -0300');

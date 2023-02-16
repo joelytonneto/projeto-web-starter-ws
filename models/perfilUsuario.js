@@ -21,6 +21,4 @@ const perfilUsuario = conexaoSequelize.define('perfil-usuario', {
   }  
 });
 
-const syncSequelize = conexaoSequelize.sync();
-
-module.exports = { perfilUsuario, syncSequelize };
+module.exports = { perfilUsuario };

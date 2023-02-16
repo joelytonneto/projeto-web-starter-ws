@@ -25,6 +25,4 @@ const perfilUsuarioMenu = conexaoSequelize.define('perfil-usuario-menu', {
   }  
 });
 
-const syncSequelize = conexaoSequelize.sync();
-
-module.exports = { perfilUsuarioMenu, syncSequelize };
+module.exports = { perfilUsuarioMenu };
