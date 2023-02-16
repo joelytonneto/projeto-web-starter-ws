@@ -19,70 +19,26 @@ exports.authUser = async (req, res, next) => {
       return res.status(401).send("Email or password is incorrect");
     }
 
-    let menus = { compact: {}, default: {}, futuristic: {},  horizontal: {} }
-    
-    menus.compact = 
-    [        
-      {
-        "id": "example2",
-        "title": "Testando Example",
-        "type": "basic",
-        "icon": "heroicons_outline:chart-pie",
-        "link": "/testando-example"
-      }
-    ];
+    let idPerfilAcesso = user.id_perfil_acesso;
 
-    menus.default = 
-    [
-      {
-        "id": "example1",
-        "title": "Example 1",
-        "type": "basic",
-        "icon": "heroicons_outline:chart-pie",
-        "link": "/testando-example"
-      },
-      {
-        "id": "example2",
-        "title": "Example 2",
-        "type": "basic",
-        "icon": "heroicons_outline:chart-pie",
-        "link": "/testando-example"
-      },
-      {
-        "id": "example3",
-        "title": "Example 3",
-        "type": "basic",
-        "icon": "heroicons_outline:chart-pie",
-        "link": "/testando-example"
-      }
-    ];
+    async function getPerfilAcessoMenu() {
+      const { rows } = await bdPostgres.query(
+        `SELECT m.id, m.title, m."type", m.icon, m.link
+        FROM "perfil-usuario-menus" as p inner join "menus" as m on
+        p.id_menu = m.id_menu WHERE p.id_perfil_usuario = $1`,
+        [idPerfilAcesso]
+      );
+      return rows;
+    }
 
-    menus.futuristic =
-    [        
-      {
-        "id": "example2",
-        "title": "Testando Example",
-        "type": "basic",
-        "icon": "heroicons_outline:chart-pie",
-        "link": "/testando-example"
-      }
-    ];
+    const perfilAcessoMenus = await getPerfilAcessoMenu();
 
-    menus.horizontal =
-    [        
-      {
-        "id": "example2",
-        "title": "Testando Example",
-        "type": "basic",
-        "icon": "heroicons_outline:chart-pie",
-        "link": "/testando-example"
-      }
-    ];
-    
-    const accessToken = jwt.sign({ id: user.id, menus: menus }, chaveSecretaJWT, {
-      expiresIn: 3600, // 24 hours
-    });
-    let tokenType = "bearer";
+    let menus = {};
+
+    menus.compact = perfilAcessoMenus;
+    menus.default = perfilAcessoMenus;
+    menus.futuristic = perfilAcessoMenus;
+    menus.horizontal = perfilAcessoMenus;
 
     let usuarioRetorno = {
       avatar: user.avatar,
@@ -90,7 +46,13 @@ exports.authUser = async (req, res, next) => {
       id: user.id,
       name: user.name,
       status: user.status,
+      menus: menus
     };
+
+    const accessToken = jwt.sign({ id: user.id, menus: menus, usuarioRetorno }, chaveSecretaJWT, {
+      expiresIn: 3600, // 24 hours
+    });
+    let tokenType = "bearer";
 
     res.send({ user: usuarioRetorno, accessToken, tokenType });
   } catch (err) {
@@ -135,9 +97,10 @@ exports.createUser = async (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.updateUser = (req, res, next) => {
+exports.updateUser = async (req, res, next) => {
   const id = req.params.id;
-  const { name, user, avatar, status, email, password } = req.body;
+  const { name, user, avatar, status, email, password, id_perfil_acesso } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   userObj.findByPk(id)
     .then((userObj) => {
@@ -152,7 +115,8 @@ exports.updateUser = (req, res, next) => {
           avatar,
           status,
           email,
-          password }, { where: { id } })
+          password: hashedPassword,
+          id_perfil_acesso }, { where: { id } })
           .then(() => res.status(200).json({ message: 'Usuário atualizado com sucesso' }))
           .catch((err) => next(err));
       }
