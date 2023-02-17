@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { conexaoSequelize } = require("../config/config");
- 
+
 const menu = conexaoSequelize.define('menu', {
   id_menu: {
     type: DataTypes.INTEGER,
@@ -14,6 +14,10 @@ const menu = conexaoSequelize.define('menu', {
   title: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  subtitle: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   type: {
     type: DataTypes.STRING,

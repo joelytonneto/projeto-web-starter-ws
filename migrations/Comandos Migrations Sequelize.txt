@@ -1,0 +1,10 @@
+#Criar uma nova migration:
+
+npx sequelize-cli migration:generate --name add-subtitle-to-menu
+
+#Executar migrations:
+npx sequelize-cli db:migrate --name 20230217124316-add-subtitle-to-menu.js --url 'postgres://postgres:postgres@127.0.0.1:5433/crud_node'
+
+#Desfazer alterações da migration:
+npx sequelize-cli db:migrate:undo --name 20230217124316-add-subtitle-to-menu.js --url 'postgres://postgres:postgres@127.0.0.1:5433/crud_node'
+

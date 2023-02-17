@@ -21,10 +21,11 @@ exports.getMenuById = (req, res, next) => {
 };
 
 exports.createMenu = (req, res, next) => {
-  const { id, title, type, icon, link, id_sistema, has_sub_menu, parent_id, ordem } = req.body;
+  const { id, title, subtitle, type, icon, link, id_sistema, has_sub_menu, parent_id, ordem } = req.body;
   menu.create({
     id,
     title,
+    subtitle,
     type,
     icon,
     link,
@@ -39,7 +40,7 @@ exports.createMenu = (req, res, next) => {
 
 exports.updateMenu = (req, res, next) => {
   const id_menu = req.params.id;
-  const { id, title, type, icon, link, id_sistema, has_sub_menu, parent_id, ordem } = req.body;
+  const { id, title, subtitle, type, icon, link, id_sistema, has_sub_menu, parent_id, ordem } = req.body;
 
   menu.findByPk(id_menu)
     .then((menu) => {
@@ -51,6 +52,7 @@ exports.updateMenu = (req, res, next) => {
         menu.update({
           id,
           title,
+          subtitle,
           type,
           icon,
           link,

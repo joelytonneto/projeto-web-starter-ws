@@ -23,9 +23,9 @@ exports.authUser = async (req, res, next) => {
 
     async function getPerfilAcessoMenu() {
       const { rows } = await bdPostgres.query(
-        `SELECT m.id, m.title, m."type", m.icon, m.link
+        `SELECT m.id_menu, m.id, m.title, m.subtitle, m."type", m.icon, m.link, m.has_sub_menu, m.parent_id
         FROM "perfil-usuario-menus" as p inner join "menus" as m on
-        p.id_menu = m.id_menu WHERE p.id_perfil_usuario = $1`,
+        p.id_menu = m.id_menu WHERE p.id_perfil_usuario = $1 order by m.ordem`,
         [idPerfilAcesso]
       );
       return rows;
@@ -33,12 +33,32 @@ exports.authUser = async (req, res, next) => {
 
     const perfilAcessoMenus = await getPerfilAcessoMenu();
 
+    const menusPais = perfilAcessoMenus.filter(menu => menu.has_sub_menu);
+    const menusFilhos = perfilAcessoMenus.filter(menu => menu.parent_id != null);
+    const menusSemSubMenus = perfilAcessoMenus.filter(menu => !(menu.has_sub_menu) && menu.parent_id == null);
+
+    let perfilAcessoMenusFinal = [];
+
+    menusSemSubMenus.forEach(menusSemSubMenus => {
+      perfilAcessoMenusFinal.push(menusSemSubMenus);
+    })
+
+    menusPais.forEach(menuPai => {
+      menuPai.children = [];
+      menusFilhos.forEach(menuFilho => {
+        if(menuFilho.parent_id == menuPai.id_menu) {
+          menuPai.children.push(menuFilho)
+        }
+      });
+      perfilAcessoMenusFinal.push(menuPai);
+    });
+
     let menus = {};
 
-    menus.compact = perfilAcessoMenus;
-    menus.default = perfilAcessoMenus;
-    menus.futuristic = perfilAcessoMenus;
-    menus.horizontal = perfilAcessoMenus;
+    menus.compact = perfilAcessoMenusFinal;
+    menus.default = perfilAcessoMenusFinal;
+    menus.futuristic = perfilAcessoMenusFinal;
+    menus.horizontal = perfilAcessoMenusFinal;
 
     let usuarioRetorno = {
       avatar: user.avatar,
