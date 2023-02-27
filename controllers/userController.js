@@ -81,6 +81,27 @@ exports.authUser = async (req, res, next) => {
   }
 };
 
+exports.listarUsuariosPaginado = (req, res, next) => {
+  const limit = parseInt(req.query.size) || 10;
+  const offset = parseInt(req.query.page) * parseInt(req.query.size) || 0;
+  
+  userObj.findAndCountAll({
+    limit,
+    offset,
+    order: [['id', 'ASC']]
+  })
+  .then(usuarios => {
+    const totalPages = Math.ceil(usuarios.count / limit);
+    res.json({
+      usuarios: usuarios.rows,
+      totalPages,
+      currentPage: Math.floor(offset / limit) + 1,
+      totalRegistros: usuarios.count
+    });
+  })
+  .catch(err => next(err));
+};
+
 exports.getAllUsers = (req, res, next) => {
   userObj.findAll()
     .then((users) => res.json(users))

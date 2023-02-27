@@ -4,6 +4,7 @@ const { verifyToken } = require("../../../routes/auth");
 
 const userController = require('../../../controllers/userController');
 
+routerUser.get("/users-paginado", verifyToken, userController.listarUsuariosPaginado);
 routerUser.get("/users", verifyToken, userController.getAllUsers);
 routerUser.get('/users/:id', verifyToken, userController.getUserById);
 routerUser.post('/users', verifyToken, userController.createUser);
