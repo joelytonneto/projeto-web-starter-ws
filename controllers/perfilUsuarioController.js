@@ -1,5 +1,26 @@
 const { perfilUsuario } = require('../models/perfilUsuario');
 
+exports.listarPerfisPaginado = (req, res, next) => {
+  const limit = parseInt(req.query.size) || 10;
+  const offset = parseInt(req.query.page) * parseInt(req.query.size) || 0;
+
+  perfilUsuario.findAndCountAll({
+    limit,
+    offset,
+    order: [['id', 'ASC']]
+  })
+  .then(perfis => {
+    const totalPages = Math.ceil(perfis.count / limit);
+    res.json({
+      perfis: perfis.rows,
+      totalPages,
+      currentPage: Math.floor(offset / limit) + 1,
+      totalRegistros: perfis.count
+    });
+  })
+  .catch(err => next(err));
+};
+
 exports.getAllperfisUsuario = (req, res, next) => {
   perfilUsuario.findAll()
     .then((perfils) => res.json(perfils))

@@ -1,5 +1,16 @@
 const { perfilUsuarioMenu } = require('../models/perfilUsuarioMenu');
 
+exports.getMenusByIdPerfil = (req, res, next) => {
+  const id = req.params.id;
+  perfilUsuarioMenu.findAll({
+    where: {
+      id_perfil_usuario: id
+    }
+  })
+    .then((perfils) => res.json(perfils))
+    .catch((err) => next(err));
+};
+
 exports.getAllperfisUsuarioMenu = (req, res, next) => {
   perfilUsuarioMenu.findAll()
     .then((perfils) => res.json(perfils))
@@ -48,6 +59,13 @@ exports.updatePerfilUsuarioMenu = (req, res, next) => {
           .catch((err) => next(err));
       }
     })
+    .catch((err) => next(err));
+};
+
+exports.deletePerfilUsuarioMenuByIdPerfil = (req, res, next) => {
+  const id_perfil_usuario = req.params.id;
+  perfilUsuarioMenu.destroy({ where: { id_perfil_usuario } })
+    .then(() => res.status(204).json({ message: 'Perfil limpo com sucesso' }))
     .catch((err) => next(err));
 };
 
