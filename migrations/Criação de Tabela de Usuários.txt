@@ -8,11 +8,11 @@ VALUES('controle-acesso', 'Controle de Acesso', '', 'group', 'heroicons_outline:
 
 INSERT INTO "menus"
 (id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
-VALUES('controle-acesso.menus', 'Menus', '', 'basic', 'heroicons_outline:chart-pie', '/menus', 1, false, 2, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+VALUES('controle-acesso.menus', 'Menus', '', 'basic', 'heroicons_outline:chart-pie', '/controle-acesso/menus', 1, false, 2, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
 
 INSERT INTO "menus"
 (id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
-VALUES('controle-acesso.usuarios', 'Usuários', '', 'basic', 'heroicons_outline:chart-pie', '/usuarios', 1, false, 2, 2, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+VALUES('controle-acesso.usuarios', 'Usuários', '', 'basic', 'heroicons_outline:chart-pie', '/controle-acesso/usuarios', 1, false, 2, 2, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
 
 INSERT INTO "perfil-usuarios"
 (id_sistema, descricao, ativo, "createdAt", "updatedAt")
