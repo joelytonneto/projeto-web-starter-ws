@@ -4,6 +4,7 @@ const { verifyToken } = require("../../../routes/auth");
 
 const menuController = require('../../../controllers/menuController');
 
+routerMenu.get("/menus-paginado", verifyToken, menuController.listarMenusPaginado);
 routerMenu.get("/menus", verifyToken, menuController.getAllMenus);
 routerMenu.get('/menus/:id', verifyToken, menuController.getMenuById);
 routerMenu.post('/menus', verifyToken, menuController.createMenu);

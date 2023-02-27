@@ -1,5 +1,26 @@
 const { menu } = require('../models/menu');
 
+exports.listarMenusPaginado = (req, res, next) => {
+  const limit = parseInt(req.query.size) || 10;
+  const offset = parseInt(req.query.page) * parseInt(req.query.size) || 0;
+  
+  menu.findAndCountAll({
+    limit,
+    offset,
+    order: [['id_menu', 'ASC']]
+  })
+  .then(menus => {
+    const totalPages = Math.ceil(menus.count / limit);
+    res.json({
+      menus: menus.rows,
+      totalPages,
+      currentPage: Math.floor(offset / limit) + 1,
+      totalRegistros: menus.count
+    });
+  })
+  .catch(err => next(err));
+};
+
 exports.getAllMenus = (req, res, next) => {
   menu.findAll()
     .then((menus) => res.json(menus))
