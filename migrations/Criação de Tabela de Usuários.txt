@@ -1,6 +1,42 @@
+INSERT INTO "menus"
+(id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
+VALUES('home', 'Home', '', 'basic', 'heroicons_outline:chart-pie', '/example', 1, false, null, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "menus"
+(id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
+VALUES('controle-acesso', 'Controle de Acesso', '', 'group', 'heroicons_outline:chart-pie', '/controle-acesso', 1, true, null, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "menus"
+(id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
+VALUES('controle-acesso.menus', 'Menus', '', 'basic', 'heroicons_outline:chart-pie', '/menus', 1, false, 2, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "menus"
+(id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
+VALUES('controle-acesso.usuarios', 'Usuários', '', 'basic', 'heroicons_outline:chart-pie', '/usuarios', 1, false, 2, 2, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
 INSERT INTO "perfil-usuarios"
 (id_sistema, descricao, ativo, "createdAt", "updatedAt")
 VALUES(1, 'ADMIN', true, '2023-02-15 22:47:55.445 -0300', '2023-02-15 22:47:55.445 -0300');
+
+INSERT INTO "perfil-usuario-menus"
+(id_menu, id_perfil_usuario, "createdAt", "updatedAt")
+VALUES(1, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "perfil-usuario-menus"
+(id_menu, id_perfil_usuario, "createdAt", "updatedAt")
+VALUES(2, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "perfil-usuario-menus"
+(id_menu, id_perfil_usuario, "createdAt", "updatedAt")
+VALUES(3, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "perfil-usuario-menus"
+(id_menu, id_perfil_usuario, "createdAt", "updatedAt")
+VALUES(4, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+
+INSERT INTO "users"
+("name", "user", avatar, status, email, "password", id_perfil_acesso, "createdAt", "updatedAt")
+VALUES('Joelyton Neto', 'joelytonneto', 'assets/images/avatars/systock2.png', 'online', 'joelytonneto@gmail.com', '$2a$10$xyU9DlP5nH.W.Ozt0mG4wunp8oH2J4uwSIwgGYp.en.hlqLoh9RLO', 1, '2023-02-15 22:47:55.445 -0300', '2023-02-15 22:47:55.445 -0300');
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -9,7 +45,7 @@ CREATE TABLE users (
   "name" TEXT NULL,
   "user" TEXT NULL,
   avatar TEXT NULL,
-  status TEXT NULL, 
+  status TEXT NULL,
   email TEXT NOT NULL,
   "password" TEXT NOT NULL,
   id_perfil_acesso INT NOT NULL,
