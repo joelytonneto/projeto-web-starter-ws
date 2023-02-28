@@ -1,15 +1,15 @@
 const express = require('express');
 const routerPerfilUsuarioMenu = express();
-const { verifyToken } = require("../../../routes/auth");
+const { verifyToken, verificarPermissao } = require("../../../routes/auth");
 
 const perfilUsuarioMenuController = require('../../../controllers/perfilUsuarioMenuController');
 
-routerPerfilUsuarioMenu.get("/perfis/:id", verifyToken, perfilUsuarioMenuController.getMenusByIdPerfil);
-routerPerfilUsuarioMenu.get("/perfis", verifyToken, perfilUsuarioMenuController.getAllperfisUsuarioMenu);
-routerPerfilUsuarioMenu.get('/perfil/:id', verifyToken, perfilUsuarioMenuController.getPerfilUsuarioMenuById);
-routerPerfilUsuarioMenu.post('/perfil', verifyToken, perfilUsuarioMenuController.createPerfilUsuarioMenu);
-routerPerfilUsuarioMenu.put('/perfil/:id', verifyToken, perfilUsuarioMenuController.updatePerfilUsuarioMenu);
-routerPerfilUsuarioMenu.delete('/perfil/:id', verifyToken, perfilUsuarioMenuController.deletePerfilUsuarioMenu);
-routerPerfilUsuarioMenu.delete('/perfil/perfil-usuario-id/:id', verifyToken, perfilUsuarioMenuController.deletePerfilUsuarioMenuByIdPerfil);
+routerPerfilUsuarioMenu.get("/perfis/:id", verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.getMenusByIdPerfil);
+routerPerfilUsuarioMenu.get("/perfis", verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.getAllperfisUsuarioMenu);
+routerPerfilUsuarioMenu.get('/perfil/:id', verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.getPerfilUsuarioMenuById);
+routerPerfilUsuarioMenu.post('/perfil', verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.createPerfilUsuarioMenu);
+routerPerfilUsuarioMenu.put('/perfil/:id', verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.updatePerfilUsuarioMenu);
+routerPerfilUsuarioMenu.delete('/perfil/:id', verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.deletePerfilUsuarioMenu);
+routerPerfilUsuarioMenu.delete('/perfil/perfil-usuario-id/:id', verifyToken, verificarPermissao(['controle-acesso.perfis']), perfilUsuarioMenuController.deletePerfilUsuarioMenuByIdPerfil);
 
 module.exports = routerPerfilUsuarioMenu;

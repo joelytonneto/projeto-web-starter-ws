@@ -1,14 +1,14 @@
 const express = require('express');
 const routerMenu = express();
-const { verifyToken } = require("../../../routes/auth");
+const { verifyToken, verificarPermissao } = require("../../../routes/auth");
 
 const menuController = require('../../../controllers/menuController');
 
-routerMenu.get("/menus-paginado", verifyToken, menuController.listarMenusPaginado);
-routerMenu.get("/menus", verifyToken, menuController.getAllMenus);
-routerMenu.get('/menus/:id', verifyToken, menuController.getMenuById);
-routerMenu.post('/menus', verifyToken, menuController.createMenu);
-routerMenu.put('/menus/:id', verifyToken, menuController.updateMenu);
-routerMenu.delete('/menus/:id', verifyToken, menuController.deleteMenu);
+routerMenu.get("/menus-paginado", verifyToken, verificarPermissao(['controle-acesso.menus']), menuController.listarMenusPaginado);
+routerMenu.get("/menus", verifyToken, verificarPermissao(['controle-acesso.menus']), menuController.getAllMenus);
+routerMenu.get('/menus/:id', verifyToken, verificarPermissao(['controle-acesso.menus']), menuController.getMenuById);
+routerMenu.post('/menus', verifyToken, verificarPermissao(['controle-acesso.menus']), menuController.createMenu);
+routerMenu.put('/menus/:id', verifyToken, verificarPermissao(['controle-acesso.menus']), menuController.updateMenu);
+routerMenu.delete('/menus/:id', verifyToken, verificarPermissao(['controle-acesso.menus']), menuController.deleteMenu);
 
 module.exports = routerMenu;

@@ -1,6 +1,6 @@
 INSERT INTO "menus"
 (id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
-VALUES('home', 'Home', '', 'basic', 'heroicons_outline:chart-pie', '/example', 1, false, null, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
+VALUES('home', 'Home', '', 'basic', 'heroicons_outline:chart-pie', '/home', 1, false, null, 1, '2023-02-16 09:57:51.674 -0300', '2023-02-16 09:57:51.674 -0300');
 
 INSERT INTO "menus"
 (id, title, subtitle, "type", icon, link, id_sistema, has_sub_menu, parent_id, ordem, "createdAt", "updatedAt")
