@@ -51,4 +51,4 @@ menu collapsable ou está contida em um menu group e sua estrutura é semelhante
     type : 'basic',
     icon : 'heroicons_outline:chart-pie',
     link : '/dashboards/analytics'
-}
+} 
